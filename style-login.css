@@ -1,0 +1,96 @@
+/* CSS Básico para a página de Login */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 2.5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h1 {
+    font-family: 'Arial Black', sans-serif;
+    color: #c0392b; /* Vermelho Poké */
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+.login-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="email"],
+input[type="password"] {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db; /* Azul */
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button[type="submit"] {
+    background-color: #2ecc71; /* Verde */
+}
+button[type="submit"]:hover {
+    background-color: #27ae60;
+}
+
+#google-login-button {
+    background-color: #c0392b; /* Vermelho Poké */
+    margin-top: 10px;
+}
+#google-login-button:hover {
+    background-color: #a93226;
+}
+
+form a {
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+form a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+    display: none; /* Começa escondido */
+}

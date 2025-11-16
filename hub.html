@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poké Check - Login</title>
-    <link rel="stylesheet" href="style-login.css">
+    <title>Poké Check</title>
+    <link rel="stylesheet" href="style-hub.css">
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -30,33 +30,40 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
     </script>
-    </head>
+</head>
 <body>
-
-    <div class="login-container">
+    <header id="main-header">
         <h1>Poké Check</h1>
+        <div class="user-menu">
+            <a href="profile.html" id="profile-link">Perfil</a>
+            <button id="logoff-button">Sair</button>
+        </div>
+    </header>
 
-        <form id="login-form">
-            <h2>Login</h2>
-            <input type="email" id="login-email" placeholder="Email" required>
-            <input type="password" id="login-password" placeholder="Senha" required>
-            <button type="submit">Entrar</button>
-            <button type="button" id="google-login-button">Entrar com Google</button>
-            <p id="login-error" class="error-message"></p>
-            <a href="#" id="show-register">Não tem uma conta? Registre-se</a>
-        </form>
-
-        <form id="register-form" style="display:none;">
-            <h2>Registrar</h2>
-            <input type="email" id="register-email" placeholder="Email" required>
-            <input type="password" id="register-password" placeholder="Senha (mín. 6 caracteres)" required>
-            <button type="submit">Registrar</button>
-            <p id="register-error" class="error-message"></p>
-            <a href="#" id="show-login">Já tem uma conta? Faça login</a>
-        </form>
-
+    <div class="logo-container">
+        <h1>Poké Check</h1>
+        <p>Seu assistente de captura</p>
     </div>
 
-    <script src="script-login.js"></script>
+    <div class="game-list">
+        <h2>Selecione o Jogo:</h2>
+        
+        <a href="checklist-za.html" class="game-card">
+            <h3>Pokémon Legends Z-A</h3>
+            <span>(174 Pokémon)</span>
+        </a>
+
+        <a href="#" class="game-card disabled">
+            <h3>Pokémon Kanto</h3>
+            <span>(Em breve)</span>
+        </a>
+
+        <a href="#" class="game-card disabled">
+            <h3>Pokémon Johto</h3>
+            <span>(Em breve)</span>
+        </a>
+
+    </div>
+<script src="script-hub.js"></script>
 </body>
 </html>

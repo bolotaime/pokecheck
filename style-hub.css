@@ -95,3 +95,62 @@ body {
 .game-card.disabled h3 {
     color: #999;
 }
+
+/* ======================================= */
+/* === ESTILOS DO HEADER (HUB) === */
+/* ======================================= */
+
+body {
+    /* Adiciona espaço no topo para o header fixo */
+    padding-top: 70px; 
+}
+
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    color: #c0392b; /* Vermelho Poké */
+    padding: 15px 30px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1.8em;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo compartilhado para o botão de logoff e link de perfil */
+.user-menu #logoff-button,
+.user-menu #profile-link {
+    background-color: transparent;
+    border: none;
+    color: #3498db;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 20px;
+}
+.user-menu #logoff-button:hover,
+.user-menu #profile-link:hover {
+    text-decoration: underline;
+}
+
+.user-menu #logoff-button {
+    font-family: Arial, sans-serif; /* Garante que o botão tenha a fonte correta */
+    padding: 0;
+}

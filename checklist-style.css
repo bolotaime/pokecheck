@@ -179,3 +179,45 @@ header {
 header h1 {
     margin: 0;
 }
+
+/* ======================================= */
+/* === ESTILOS DO USER-MENU (CHECKLIST) === */
+/* ======================================= */
+
+/* Ajusta o .header-controls para ter o menu */
+.header-controls {
+    display: flex;
+    align-items: center;
+}
+
+.header-controls .user-menu {
+    display: flex;
+    align-items: center;
+    /* Adiciona uma borda para separar dos controles */
+    border-left: 1px solid #a93226; 
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+/* Estilo do link de perfil e botão de logoff no header */
+.header-controls .user-menu #profile-link,
+.header-controls .user-menu #logoff-button {
+    background: transparent;
+    border: none;
+    color: white; /* Diferente do hub, aqui é branco */
+    font-size: 0.9em;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.header-controls .user-menu #logoff-button {
+     font-family: Arial, sans-serif;
+     padding: 0;
+}
+
+.header-controls .user-menu #profile-link:hover,
+.header-controls .user-menu #logoff-button:hover {
+    text-decoration: underline;
+}

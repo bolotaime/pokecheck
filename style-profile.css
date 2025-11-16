@@ -1,0 +1,119 @@
+/* Estilos da página de Perfil */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding-top: 100px; /* Espaço para o header + margem */
+}
+
+/* Header Fixo (copiado do style-hub.css, mas simplificado) */
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+}
+
+.back-button {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #3498db;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: transform 0.2s ease;
+}
+.back-button:hover {
+    transform: scale(1.2);
+}
+
+.user-menu #logoff-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+}
+.user-menu #logoff-button:hover {
+    background-color: #c0392b;
+}
+
+/* Conteúdo Principal */
+.profile-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.profile-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.profile-card h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #f0f4f8;
+    padding-bottom: 10px;
+    color: #c0392b; /* Vermelho Poké */
+}
+
+.profile-card p {
+    font-size: 1.1em;
+    color: #333;
+    line-height: 1.6;
+}
+.profile-card p strong {
+    color: #555;
+}
+.profile-card p span {
+    font-family: monospace;
+    color: #555;
+    background-color: #f4f4f4;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+#reset-password-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+#reset-password-button:hover {
+    background-color: #2980b9;
+}
+
+.message {
+    font-size: 0.9em;
+    margin-top: 15px;
+    display: none; /* Começa escondida */
+}

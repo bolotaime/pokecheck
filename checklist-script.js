@@ -1,127 +1,179 @@
-// Espera todo o conteúdo da página carregar antes de rodar o script
+// Espera todo o conteúdo da página carregar
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- NOVO: Nome da "chave" onde salvaremos os dados ---
-    // Vamos guardar um registro de todos os pokémons capturados aqui
-    const STORAGE_KEY = 'pokemonCapturedList';
+    // --- VARIÁVEL GLOBAL PARA O USUÁRIO ---
+    // Precisamos saber quem está logado para salvar/carregar os dados corretos.
+    let currentUser = null;
+    let userId = null; // Vamos guardar o ID do usuário aqui
 
-    // --- NOVO: Função para Carregar o Estado Salvo ---
-    function loadCapturedState() {
-        // 1. Pega os dados salvos no localStorage. Pode ser que não exista nada (null).
-        const capturedJSON = localStorage.getItem(STORAGE_KEY);
-
-        // 2. Se houver dados, transforma o texto (JSON) de volta em um objeto
-        if (capturedJSON) {
-            const capturedList = JSON.parse(capturedJSON);
+    // =================================================================
+    // PASSO 1: VERIFICAR SE O USUÁRIO ESTÁ LOGADO (SUBSTITUI O INÍCIO)
+    // =================================================================
+    // O auth (definido no HTML) vai checar o estado do login
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // --- O usuário ESTÁ logado ---
+            currentUser = user;
+            userId = user.uid; // ID único do usuário
             
-            // 3. Passa por cada item da página
-            document.querySelectorAll('.pokemon-item').forEach(item => {
-                const pokemonName = item.dataset.name;
-                
-                // 4. Se o nome deste item estiver na lista salva, aplica a classe 'captured'
-                if (capturedList[pokemonName]) {
-                    item.classList.add('captured');
-                }
-            });
+            // Agora que sabemos quem é o usuário, carregamos o progresso dele
+            loadCapturedState(userId);
+
+            // E ativamos todos os botões e lógicas da página
+            setupPageListeners();
+
+        } else {
+            // --- O usuário NÃO ESTÁ logado ---
+            currentUser = null;
+            userId = null;
+            
+            // Se não tem ninguém logado, manda para a página de login.
+            // (No futuro, você criará a 'login.html')
+            alert("Você não está logado! Redirecionando para o login...");
+            // window.location.href = 'login.html'; // Descomente quando tiver a página
+        }
+
+    });
+
+    // =================================================================
+    // PASSO 2: REESCREVER A FUNÇÃO DE CARREGAR (loadCapturedState)
+    // =================================================================
+    
+    async function loadCapturedState(userId) {
+        if (!userId) return; // Segurança: não faz nada se o ID for nulo
+
+        // 1. Define o "caminho" no banco de dados
+        // Coleção 'checklists' -> Documento com o ID do usuário
+        const docRef = db.collection('checklists').doc(userId);
+
+        try {
+            // 2. Tenta pegar o documento
+            const doc = await docRef.get();
+
+            if (doc.exists) {
+                // 3. Se o documento existe, pega os dados
+                const data = doc.data();
+                // 4. Pega o mapa de capturados SÓ DESTE JOGO (ex: legends-za)
+                const capturedList = data['legends-za'] || {}; // Usa {} se o mapa desse jogo ainda não existir
+
+                // 5. Itera pela página e aplica a classe (igual ao código antigo)
+                document.querySelectorAll('.pokemon-item').forEach(item => {
+                    const pokemonName = item.dataset.name;
+                    if (capturedList[pokemonName]) {
+                        item.classList.add('captured');
+                    } else {
+                        item.classList.remove('captured'); // Garante que esteja limpo
+                    }
+                });
+
+            } else {
+                // Documento ainda não existe (primeiro login desse usuário)
+                console.log("Nenhum dado salvo encontrado para este usuário. (Isso é normal)");
+            }
+        } catch (error) {
+            console.error("Erro ao carregar dados: ", error);
         }
     }
 
-    // --- NOVO: Função para Salvar o Estado Atual ---
-    function saveCapturedState() {
-        const capturedList = {}; // Cria um objeto vazio
+    // =================================================================
+    // PASSO 3: REESCREVER A FUNÇÃO DE SALVAR (saveCapturedState)
+    // =================================================================
+    
+    async function saveCapturedState() {
+        if (!userId) return; // Não salva se ninguém estiver logado
 
-        // Passa por todos os itens que TÊM a classe 'captured'
+        const capturedList = {}; // Objeto que vamos salvar
+
+        // 1. Constrói o objeto (igual ao código antigo)
         document.querySelectorAll('.pokemon-item.captured').forEach(item => {
-            // Adiciona o nome do Pokémon (do 'data-name') ao objeto
             const pokemonName = item.dataset.name;
             capturedList[pokemonName] = true;
         });
 
-        // Converte o objeto para texto (JSON) e salva no localStorage
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(capturedList));
+        // 2. Define o "caminho" no banco
+        const docRef = db.collection('checklists').doc(userId);
+
+        try {
+            // 3. Salva os dados!
+            //    Usamos { merge: true } para não apagar dados de outros jogos
+            //    que possam estar no mesmo documento.
+            await docRef.set({
+                'legends-za': capturedList // Salva o objeto dentro de um "mapa" com o nome do jogo
+            }, { merge: true });
+
+            console.log("Progresso salvo na nuvem!");
+
+        } catch (error) {
+            console.error("Erro ao salvar dados: ", error);
+        }
     }
 
-    // --- MODIFICADO: Lógica de Clique ---
-    
-    // Seleciona TODOS os itens que têm a classe .pokemon-item
-    const pokemonItems = document.querySelectorAll('.pokemon-item');
+    // =================================================================
+    // PASSO 4: AGRUPAR TODOS OS "OUVINTES" (Listeners)
+    // =================================================================
+    // Esta função só será chamada DEPOIS que o usuário for confirmado
+    function setupPageListeners() {
 
-    // Itera (passa por) cada um desses itens
-    pokemonItems.forEach(item => {
-        
-        // Adiciona um "ouvinte" de clique a cada item
-        item.addEventListener('click', () => {
-            
-            // Alterna a classe 'captured' (como antes)
-            item.classList.toggle('captured');
-            
-            // --- NOVO: Salva o estado ---
-            // Após qualquer clique, salvamos o estado atual no localStorage
-            saveCapturedState();
-        });
-    });
+        // Dentro da função setupPageListeners() ...
 
-    // --- NOVO: Carrega o estado salvo ---
-    // Assim que a página carregar, chama a função para carregar os dados
-    loadCapturedState();
-});
+    // ... (aqui está o código do searchBar) ...
 
-// --- NOVO: Lógica da Barra de Busca ---
-
-    // 1. Encontra a barra de busca
-    const searchBar = document.getElementById('search-bar');
-    // 2. Encontra a lista de todos os "cards" de pokémon
-    const allPokemon = document.querySelectorAll('.pokemon-entry');
-
-    // 3. Adiciona um "ouvinte" ao evento 'input' (dispara a cada tecla digitada)
-    searchBar.addEventListener('input', () => {
-        
-        // 4. Pega o valor da busca, remove espaços e converte para minúsculas
-        const searchTerm = searchBar.value.toLowerCase().trim();
-
-        // 5. Passa por cada "card" de Pokémon
-        allPokemon.forEach(entry => {
-            
-            // 6. Pega o nome do Pokémon (que está no <h3>)
-            const pokemonName = entry.querySelector('h3').textContent.toLowerCase();
-
-            // 7. Verifica se o nome do Pokémon INCLUI o termo da busca
-            if (pokemonName.includes(searchTerm)) {
-                // Se incluir, mostra o card (remove a classe 'hidden')
-                entry.classList.remove('hidden');
-            } else {
-                // Se não incluir, esconde o card (adiciona a classe 'hidden')
-                entry.classList.add('hidden');
+    // --- NOVO: LÓGICA DO BOTÃO DE LOGOFF ---
+    const logoffButton = document.getElementById('logoff-button');
+    if (logoffButton) {
+        logoffButton.addEventListener('click', () => {
+            if (confirm('Tem certeza que deseja sair?')) {
+                auth.signOut()
+                    .then(() => {
+                        // Sign-out successful.
+                        window.location.href = 'index.html'; // Redirect to login
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao fazer logoff:', error);
+                    });
             }
         });
-    });
-    // --- Fim da lógica da Barra de Busca ---
+    }
+    // --- Fim da lógica do logoff ---
 
-// --- Lógica do Botão de Reset (MODIFICADA) ---
-    
-    // 1. Encontra o botão
-    const resetButton = document.getElementById('reset-button');
-
-    // 2. Adiciona o "ouvinte" de clique
-    resetButton.addEventListener('click', () => {
+} // Fim da função setupPageListeners
         
-        // 3. PRIMEIRO, encontramos os itens que já estão capturados
-        const capturedItems = document.querySelectorAll('.pokemon-item.captured');
+        // --- Lógica de clique no Pokémon (igual, mas agora chama a nova save) ---
+        const pokemonItems = document.querySelectorAll('.pokemon-item');
+        pokemonItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('captured');
+                saveCapturedState(); // Chama a nova função async
+            });
+        });
 
-        // 4. SÓ executamos o resto se o número de itens for MAIOR QUE ZERO
-        if (capturedItems.length > 0) {
-            
-            // 5. Agora sim, pedimos a confirmação
-            if (confirm('Tem certeza que deseja desmarcar TODOS os Pokémon capturados?')) {
-                
-                // 6. Remove a classe 'captured' de cada um
-                capturedItems.forEach(item => {
-                    item.classList.remove('captured');
-                });
-                
-                // 7. Salva o estado limpo
-                saveCapturedState();
+        // --- Lógica do Botão de Reset (igual, mas agora chama a nova save) ---
+        const resetButton = document.getElementById('reset-button');
+        resetButton.addEventListener('click', () => {
+            const capturedItems = document.querySelectorAll('.pokemon-item.captured');
+            if (capturedItems.length > 0) {
+                if (confirm('Tem certeza que deseja desmarcar TODOS os Pokémon capturados?')) {
+                    capturedItems.forEach(item => {
+                        item.classList.remove('captured');
+                    });
+                    saveCapturedState(); // Chama a nova função async
+                }
             }
-        }
-        // Se capturedItems.length for 0, o clique simplesmente não faz nada.
-    });
+        });
+
+        // --- Lógica da Barra de Busca (exatamente igual, não mexe com dados) ---
+        const searchBar = document.getElementById('search-bar');
+        const allPokemon = document.querySelectorAll('.pokemon-entry');
+        searchBar.addEventListener('input', () => {
+            const searchTerm = searchBar.value.toLowerCase().trim();
+            allPokemon.forEach(entry => {
+                const pokemonName = entry.querySelector('h3').textContent.toLowerCase();
+                if (pokemonName.includes(searchTerm)) {
+                    entry.classList.remove('hidden');
+                } else {
+                    entry.classList.add('hidden');
+                }
+            });
+        });
+    }
+); // Fim do 'DOMContentLoaded'

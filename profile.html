@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poké Check - Meu Perfil</title>
+    <link rel="stylesheet" href="style-profile.css">
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // 👇 SUA CONFIGURAÇÃO (firebaseConfig) ESTÁ CORRETA E É A MESMA 👇
+        const firebaseConfig = {
+          apiKey: "AIzaSyB8WiFk5OCzA9wTOZoIVennX2xhW_nk_Kk",
+          authDomain: "pokecheck-4e828.firebaseapp.com",
+          projectId: "pokecheck-4e828",
+          storageBucket: "pokecheck-4e828.firebasestorage.app",
+          messagingSenderId: "845852208358",
+          appId: "1:845852208358:web:820e4612660ca8e248df27",
+          measurementId: "G-FCR8GF6V94"
+        };
+
+        // Inicializa o Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // ✨ AQUI ESTÁ A MÁGICA ✨
+        // Isso cria as variáveis globais que o 'script-login.js' precisa
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+    </head>
+<body>
+
+    <header id="main-header">
+        <div class="header-title">
+            <a href="hub.html" class="back-button" title="Voltar ao Hub">&#8592;</a>
+            <h1>Meu Perfil</h1>
+        </div>
+        <div class="user-menu">
+            <button id="logoff-button">Sair</button>
+        </div>
+    </header>
+
+    <main class="profile-container">
+        
+        <div class="profile-card">
+            <h2>Informações da Conta</h2>
+            <p>
+                <strong>Email:</strong>
+                <span id="user-email-display">Carregando...</span>
+            </p>
+            <p>
+                <strong>ID de Usuário:</strong>
+                <span id="user-id-display">Carregando...</span>
+            </p>
+        </div>
+
+        <div class="profile-card">
+            <h2>Estatísticas (Em Breve)</h2>
+            <p>Total de Pokémon Capturados: --</p>
+            <p>Total de Shinies Capturados: --</p>
+        </div>
+
+        <div class="profile-card">
+            <h2>Gerenciar Conta</h2>
+            <button id="reset-password-button">Redefinir Senha</button>
+            <p id="reset-message" class="message"></p>
+        </div>
+
+    </main>
+    <script src="script-profile.js"></script>
+</body>
+</html>
