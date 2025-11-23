@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poké Check - Checklist</title>
+    <link rel="stylesheet" href="checklist-style-core.css">
+    <link rel="stylesheet" href="style-hub.css"> 
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-init.js"></script>
+    <script src="script-hub.js"></script>
+</head>
+<body>
+
+    <!-- Header Principal (Vermelho) -->
+    <header>
+        <div class="header-title">
+            <a href="hub.html" class="back-button" title="Voltar">&#8592;</a>
+            <h1 id="page-title">Carregando...</h1>
+        </div>
+        
+        <div class="header-controls">
+            <!-- Menu de Usuário -->
+            <div class="user-menu">
+                <a href="profile.html" id="profile-link">Perfil</a> 
+                <button id="logoff-button">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-Header (Rosa Claro #f3c2bd) -->
+    <div class="sub-header">
+        
+        <!-- Lado Esquerdo: Filtro de Capturados -->
+        <div class="filter-container">
+            <label class="switch-small">
+                <input type="checkbox" id="filter-captured">
+                <span class="slider-small"></span>
+            </label>
+            <span class="filter-label">Apenas Capturados</span>
+        </div>
+
+        <!-- Centro: Barra de Busca -->
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Buscar Pokémon...">
+        </div>
+
+        <!-- Lado Direito: Botão de Opções -->
+        <button id="btn-settings" class="btn-options">
+            Opções ⚙️
+        </button>
+    </div>
+
+    <!-- Container principal (Grid de Boxes) -->
+    <div id="pokemon-checklist">
+        <p style="text-align:center; padding-top: 50px;">Aguarde, carregando Pokédex...</p>
+    </div>
+
+    <!-- MODAL DE DETALHES DO POKÉMON -->
+    <div id="modal-pokemon-details" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="detail-header">
+                <button id="btn-close-detail" class="close-detail-btn">&times;</button>
+                <h2 id="detail-name">Nome</h2>
+                <span id="detail-id">#000</span>
+            </div>
+            
+            <div class="detail-body">
+                <h3>Registrar Captura:</h3>
+                
+                <!-- Opções Visuais (Grid de Variantes) -->
+                <div class="variant-grid">
+                    <!-- Normal -->
+                    <div class="variant-item" id="variant-normal">
+                        <img id="img-normal" src="" alt="Normal">
+                        <span>Normal</span>
+                        <div class="check-indicator">✓</div>
+                    </div>
+
+                    <!-- Shiny -->
+                    <div class="variant-item" id="variant-shiny">
+                        <img id="img-shiny" src="" alt="Shiny">
+                        <span>Shiny</span>
+                        <div class="check-indicator">✓</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE EDIÇÃO DA LISTA -->
+    <div id="modal-edit-list" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Configurações da Lista</h3>
+                <button id="btn-close-edit" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label>Nome da Lista:</label>
+                <input type="text" id="edit-list-name">
+
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="edit-is-public">
+                        <span class="slider"></span>
+                    </label>
+                    <div>
+                        <span class="switch-label">Visível no Perfil Público</span>
+                    </div>
+                </div>
+
+                <label>Compartilhar Link Privado:</label>
+                <div class="copy-link-wrapper">
+                    <input type="text" id="share-link-input" readonly class="copy-link-input">
+                    <button id="btn-copy-link" class="btn-primary" style="padding: 5px 10px;">Copiar</button>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: space-between;">
+                <button id="btn-delete-list" style="background-color: #e74c3c; border-radius: 5px; color: white; border: none; padding: 10px;">Excluir</button>
+                <button id="btn-save-edit" class="btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="checklist-game-data.js"></script> 
+</body>
+</html>

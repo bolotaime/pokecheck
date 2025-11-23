@@ -3,67 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poké Check</title>
+    <title>Poké Check - Minhas Listas</title>
+    <!-- Usa o mesmo CSS do checklist para garantir consistência no header -->
+    <link rel="stylesheet" href="checklist-style-core.css">
     <link rel="stylesheet" href="style-hub.css">
 
+    <!-- Scripts do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     
-    <script>
-        // 👇 SUA CONFIGURAÇÃO (firebaseConfig) ESTÁ CORRETA E É A MESMA 👇
-        const firebaseConfig = {
-          apiKey: "AIzaSyB8WiFk5OCzA9wTOZoIVennX2xhW_nk_Kk",
-          authDomain: "pokecheck-4e828.firebaseapp.com",
-          projectId: "pokecheck-4e828",
-          storageBucket: "pokecheck-4e828.firebasestorage.app",
-          messagingSenderId: "845852208358",
-          appId: "1:845852208358:web:820e4612660ca8e248df27",
-          measurementId: "G-FCR8GF6V94"
-        };
-
-        // Inicializa o Firebase
-        firebase.initializeApp(firebaseConfig);
-        
-        // ✨ AQUI ESTÁ A MÁGICA ✨
-        // Isso cria as variáveis globais que o 'script-login.js' precisa
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-    </script>
+    <!-- Inicialização do Firebase -->
+    <script src="firebase-init.js"></script>
 </head>
 <body>
-    <header id="main-header">
-        <h1>Poké Check</h1>
-        <div class="user-menu">
-            <a href="profile.html" id="profile-link">Perfil</a>
-            <button id="logoff-button">Sair</button>
+
+    <!-- Cabeçalho Unificado (Igual ao Checklist) -->
+    <header>
+        <div class="header-title">
+            <!-- Sem botão de voltar aqui, pois é a home -->
+            <h1>Poké Check</h1>
+        </div>
+        
+        <div class="header-controls">
+            <!-- Menu de Usuário -->
+            <div class="user-menu">
+                <a href="profile.html" id="profile-link">Perfil</a> 
+                <button id="logoff-button">Sair</button>
+            </div>
         </div>
     </header>
 
-    <div class="logo-container">
-        <h1>Poké Check</h1>
-        <p>Seu assistente de captura</p>
-    </div>
-
-    <div class="game-list">
-        <h2>Selecione o Jogo:</h2>
+    <!-- Conteúdo Principal -->
+    <main class="hub-container">
         
-        <a href="checklist-za.html" class="game-card">
-            <h3>Pokémon Legends Z-A</h3>
-            <span>(174 Pokémon)</span>
-        </a>
+        <!-- Barra de Ação -->
+        <div class="hub-header">
+            <h2>Minhas Poké Lists</h2>
+            <button id="btn-new-checklist" class="btn-primary">+ Nova Poké List</button>
+        </div>
 
-        <a href="#" class="game-card disabled">
-            <h3>Pokémon Kanto</h3>
-            <span>(Em breve)</span>
-        </a>
+        <!-- Área de Listas -->
+        <div id="my-checklists-container" class="checklists-grid">
+            <!-- O JS vai preencher aqui -->
+            <p class="empty-state">Carregando...</p>
+        </div>
 
-        <a href="#" class="game-card disabled">
-            <h3>Pokémon Johto</h3>
-            <span>(Em breve)</span>
-        </a>
+    </main>
 
+    <!-- ========================================= -->
+    <!-- MODAL DE CRIAÇÃO DE LISTA -->
+    <!-- ========================================= -->
+    <div id="modal-new-checklist" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Criar Nova Poké List</h3>
+                <button id="btn-close-modal" class="btn-close">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Seleção do Jogo -->
+                <label for="select-game">Escolha o Jogo:</label>
+                <select id="select-game">
+                    <option value="">Selecione um jogo...</option>
+                    <!-- O JavaScript vai preencher as opções aqui -->
+                </select>
+
+                <!-- Nome da Lista -->
+                <label for="input-checklist-name">Nome da Lista:</label>
+                <input type="text" id="input-checklist-name" placeholder="Ex: Minha Living Dex">
+
+                <!-- Interruptor de Privacidade -->
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="check-is-public" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <div>
+                        <span class="switch-label">Visível no Perfil Público</span>
+                        <span class="switch-desc">Se desligado, a lista será privada.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btn-create-checklist" class="btn-primary">Criar</button>
+            </div>
+        </div>
     </div>
-<script src="script-hub.js"></script>
+
+    <!-- O Cérebro da Página -->
+    <script src="script-hub.js"></script>
 </body>
 </html>

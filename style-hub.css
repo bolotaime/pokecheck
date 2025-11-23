@@ -1,156 +1,207 @@
-/* Estilos da página "HUB" (index.html) */
+/* Estilos Gerais */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f4f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
     margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    padding-top: 80px; /* Espaço para o header fixo */
 }
 
-.logo-container {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.logo-container h1 {
-    font-family: 'Arial Black', sans-serif;
-    font-size: 3.5em;
-    margin: 0;
-    color: #c0392b; /* Vermelho Poké */
-}
-
-.logo-container p {
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 5px;
-}
-
-.game-list {
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-}
-
-.game-list h2 {
-    font-size: 1.5em;
-    color: #333;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.game-card {
-    display: block;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 25px 30px;
-    margin-bottom: 15px;
-    
-    text-decoration: none;
-    color: #333;
-    
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    transition: all 0.2s ease-in-out;
-}
-
-.game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    border-color: #c0392b;
-}
-
-.game-card h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.4em;
-    color: #3498db; /* Azul */
-}
-
-.game-card:hover h3 {
-    color: #c0392b;
-}
-
-.game-card span {
-    font-size: 0.9em;
-    color: #777;
-}
-
-/* Estilo para jogos "Em breve" */
-.game-card.disabled {
-    background-color: #f9f9f9;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.game-card.disabled:hover {
-    transform: none;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    border-color: #ddd;
-}
-
-.game-card.disabled h3 {
-    color: #999;
-}
-
-/* ======================================= */
-/* === ESTILOS DO HEADER (HUB) === */
-/* ======================================= */
-
-body {
-    /* Adiciona espaço no topo para o header fixo */
-    padding-top: 70px; 
-}
-
-#main-header {
+/* Header Fixo */
+#main-header, header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    color: #c0392b; /* Vermelho Poké */
+    top: 0; left: 0; width: 100%;
+    background-color: #c0392b; /* Vermelho original */
+    color: white; /* Texto branco */
     padding: 15px 30px;
-    
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 100;
     box-sizing: border-box;
 }
 
-#main-header h1 {
-    margin: 0;
-    font-family: 'Arial Black', sans-serif;
-    font-size: 1.8em;
+/* Título do Header (Padronizado para Arial) */
+#main-header h1, header h1 { 
+    margin: 0; 
+    font-family: Arial, sans-serif; /* Alterado para Arial simples */
+    font-weight: bold; /* Mantém o negrito */
+    color: white; 
 }
 
-.user-menu {
+/* Links do Menu no Header */
+.user-menu button {
+    background: none; border: none; cursor: pointer;
+    font-size: 1em; 
+    color: white; 
+    margin-left: 15px;
+    font-family: Arial, sans-serif; /* Fonte Arial */
+    font-weight: bold;
+}
+.user-menu a { 
+    text-decoration: none; 
+    color: white; 
+    font-family: Arial, sans-serif; /* Fonte Arial */
+    font-weight: bold; 
+}
+.user-menu a:hover, .user-menu button:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+}
+
+/* Container Principal */
+.hub-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Barra de Ação (Título + Botão Novo) */
+.hub-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
 }
 
-/* Estilo compartilhado para o botão de logoff e link de perfil */
-.user-menu #logoff-button,
-.user-menu #profile-link {
-    background-color: transparent;
+/* Títulos internos (Também em Arial para consistência, se desejar) */
+.hub-header h2 {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+}
+
+.btn-primary {
+    background-color: #27ae60; /* Verde */
+    color: white;
     border: none;
-    color: #3498db;
+    padding: 10px 20px;
+    border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
-    text-decoration: none;
-    margin-left: 20px;
+    transition: background 0.3s;
+    font-weight: bold;
+    font-family: Arial, sans-serif; /* Botão em Arial */
 }
-.user-menu #logoff-button:hover,
-.user-menu #profile-link:hover {
-    text-decoration: underline;
+.btn-primary:hover { background-color: #2ecc71; }
+
+/* Grade de Checklists */
+.checklists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
 
-.user-menu #logoff-button {
-    font-family: Arial, sans-serif; /* Garante que o botão tenha a fonte correta */
-    padding: 0;
+/* Card de Checklist (Miniatura) */
+.checklist-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-left: 5px solid #c0392b; /* Cor do jogo */
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
 }
+
+.checklist-card:active { cursor: grabbing; }
+.checklist-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+/* Estilos de Drag & Drop */
+.checklist-card.dragging {
+    opacity: 0.5;
+    border: 2px dashed #c0392b;
+    background-color: #fceceb;
+}
+.checklist-card.drag-over { transform: scale(1.02); }
+
+.card-content { flex-grow: 1; }
+.card-content h3 { 
+    margin: 0 0 5px 0; 
+    color: #333; 
+    font-family: Arial, sans-serif; /* Título do card em Arial */
+}
+.card-content .meta { font-size: 0.85em; color: #777; line-height: 1.4; }
+
+/* Botão de Excluir (Lixeira) */
+.btn-delete-list {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    z-index: 2;
+}
+.btn-delete-list:hover { opacity: 1; transform: scale(1.1); }
+
+.empty-state {
+    text-align: center; color: #888; font-style: italic; grid-column: 1 / -1; margin-top: 40px;
+}
+
+/* =========================== */
+/* ESTILOS DO MODAL (POP-UP) */
+/* =========================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+.modal-overlay.hidden { visibility: hidden; opacity: 0; pointer-events: none; }
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;
+}
+.modal-header h3 { 
+    margin: 0; 
+    color: #c0392b; 
+    font-family: Arial, sans-serif; /* Título do modal em Arial */
+}
+.btn-close { background: none; border: none; font-size: 1.5em; cursor: pointer; }
+
+.modal-body label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+.modal-body select, .modal-body input[type="text"] {
+    width: 100%; padding: 10px; margin-bottom: 20px;
+    border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;
+}
+
+.modal-footer { text-align: right; margin-top: 20px; }
+
+/* Switch Toggle */
+.switch-container {
+    display: flex; align-items: center; margin-bottom: 20px; background: #f9f9f9; padding: 10px; border-radius: 5px;
+}
+.switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-right: 10px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: #27ae60; }
+input:checked + .slider:before { transform: translateX(26px); }
+.switch-label { font-weight: bold; color: #555; }
+.switch-desc { display: block; font-size: 0.85em; color: #888; margin-top: 2px; }

@@ -1,0 +1,394 @@
+/* =========================== */
+/* LAYOUT GERAL */
+/* =========================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding-top: 80px;
+}
+
+/* =========================== */
+/* HEADER E MENU (Mantidos) */
+/* =========================== */
+header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background-color: #c0392b;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.header-title { display: flex; align-items: center; gap: 15px; }
+.header-title h1 { margin: 0; font-family: Arial, sans-serif; font-weight: bold; font-size: 1.5em; color: white; }
+.back-button { text-decoration: none; font-size: 1.5em; color: white; font-weight: bold; }
+
+.header-controls { display: flex; align-items: center; gap: 15px; }
+
+#search-bar {
+    padding: 8px 12px; border: 1px solid #fff; border-radius: 20px; outline: none; font-size: 0.9em; width: 200px; transition: width 0.3s; background-color: rgba(255,255,255,0.9); font-family: Arial, sans-serif;
+}
+#search-bar:focus { width: 250px; background-color: #fff; }
+
+.btn-icon {
+    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 0.9em; color: white; display: flex; align-items: center; gap: 5px; transition: all 0.2s; font-family: Arial, sans-serif; font-weight: bold;
+}
+.btn-icon:hover { background-color: rgba(255,255,255,0.3); }
+
+.user-menu { display: flex; align-items: center; gap: 15px; padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.3); }
+.user-menu a { text-decoration: none; color: white; font-weight: bold; font-size: 0.9em; font-family: Arial, sans-serif; }
+.user-menu button { background: none; border: none; cursor: pointer; color: white; font-size: 0.9em; font-weight: bold; font-family: Arial, sans-serif; }
+.user-menu button:hover { text-decoration: underline; opacity: 0.9; }
+
+
+/* =========================== */
+/* ESTRUTURA DOS BOXES (NOVO) */
+/* =========================== */
+
+/* Container que segura todos os boxes */
+#pokemon-checklist {
+    padding: 20px;
+    max-width: 1000px; /* Largura ideal para 6 colunas */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Espaço entre os boxes */
+}
+
+/* Título de cada Box (ex: #1 - #30) */
+.box-header {
+    background-color: #34495e; /* Cor escura estilo PC */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* O Grid de 30 slots (6 colunas x 5 linhas) */
+.pc-box-grid {
+    display: grid;
+    /* Força exatamente 6 colunas */
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 8px;
+    background-color: #ecf0f1; /* Fundo do box */
+    padding: 10px;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid #bdc3c7;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Responsividade para telas muito pequenas (celular em pé) */
+@media (max-width: 600px) {
+    .pc-box-grid {
+        /* No celular, 6 colunas ficam muito apertadas. 
+           Podemos mudar para 3 ou 4, ou manter 6 com scroll horizontal.
+           Vou optar por 3 colunas para legibilidade no mobile. */
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* =========================== */
+/* CARD DO POKÉMON (SLOT) */
+/* =========================== */
+.pokemon-item {
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    aspect-ratio: 1 / 1; /* Quadrado perfeito */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s ease;
+    overflow: hidden;
+}
+
+.pokemon-item:hover {
+    transform: scale(1.05);
+    border-color: #3498db;
+    z-index: 2;
+}
+
+/* Estado: Capturado (Qualquer variante) */
+.pokemon-item.captured-any {
+    background-color: #eafaf1; /* Fundo verde claro */
+    border-color: #2ecc71;     /* Borda verde */
+}
+
+.pokemon-item img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+/* Número da Dex */
+.dex-num {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: 0.65em;
+    color: #7f8c8d;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+/* Ícone de Engrenagem */
+.more-options-icon {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 0.9em;
+    color: #bdc3c7;
+    opacity: 0; /* Só aparece no hover */
+    transition: opacity 0.2s;
+}
+.pokemon-item:hover .more-options-icon { opacity: 1; }
+
+/* Indicadores (Bolinhas) */
+.badges-container {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: flex;
+    gap: 3px;
+}
+
+.badge {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: none;
+}
+.badge.show { display: block; }
+.badge-normal { background-color: #2ecc71; border: 1px solid #27ae60; }
+.badge-shiny { background-color: #f1c40f; border: 1px solid #f39c12; }
+
+
+/* =========================== */
+/* MODAIS (Mantidos) */
+/* =========================== */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex; justify-content: center; align-items: center; z-index: 2000;
+}
+.modal-overlay.hidden { visibility: hidden; opacity: 0; pointer-events: none; }
+
+.modal-content {
+    background: white; border-radius: 15px; width: 90%; max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden;
+    display: flex; flex-direction: column;
+}
+
+.detail-header {
+    background: #f8f9fa; padding: 20px; text-align: center; border-bottom: 1px solid #eee; position: relative;
+}
+.detail-header img { width: 100px; height: 100px; image-rendering: pixelated; }
+.detail-header h2 { margin: 10px 0 0; color: #333; font-family: Arial, sans-serif; }
+.detail-header span { color: #777; font-size: 0.9em; font-family: Arial, sans-serif; }
+
+.close-detail-btn {
+    position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 1.5em; cursor: pointer; color: #aaa;
+}
+
+.detail-body, .modal-body { padding: 20px; }
+.check-options { display: flex; flex-direction: column; gap: 10px; }
+
+.check-option {
+    display: flex; align-items: center; padding: 12px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: background 0.2s;
+}
+.check-option:hover { background-color: #f9f9f9; }
+.check-option input { margin-right: 15px; width: 20px; height: 20px; cursor: pointer; }
+.check-option span { font-size: 1.1em; font-weight: 500; flex-grow: 1; font-family: Arial, sans-serif; }
+.icon-label { margin-right: 8px; }
+
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid #eee; }
+.modal-header h3 { margin: 0; color: #c0392b; font-family: Arial, sans-serif; }
+.btn-close { background: none; border: none; font-size: 1.5em; cursor: pointer; }
+.modal-body label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-family: Arial, sans-serif; }
+.modal-body input[type="text"] { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+.modal-footer { padding: 20px; border-top: 1px solid #eee; text-align: right; background: #fcfcfc; }
+.btn-primary { background-color: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; font-family: Arial, sans-serif; }
+.btn-primary:hover { background-color: #2ecc71; }
+
+/* ... (MANTENHA O LAYOUT GERAL E HEADER DO ARQUIVO ANTERIOR) ... */
+/* Copie todo o bloco inicial do arquivo anterior até o final de HEADER E MENU */
+
+/* =========================== */
+/* SUB-HEADER (NOVO) */
+/* =========================== */
+.sub-header {
+    background-color: #f3c2bd; /* Rosa Claro */
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: fixed;
+    top: 60px; /* Logo abaixo do header principal (ajuste se header mudar de altura) */
+    left: 0; width: 100%;
+    z-index: 90;
+    box-sizing: border-box;
+    height: 60px; /* Altura fixa para calcular padding do body */
+}
+
+/* Ajuste do body para compensar os dois headers */
+body {
+    padding-top: 130px; /* 70px header + 60px subheader */
+}
+
+/* Botão de Opções */
+.btn-options {
+    background: none;
+    border: 2px solid #34495e;
+    color: #34495e;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: all 0.2s;
+}
+.btn-options:hover {
+    background-color: #34495e;
+    color: white;
+}
+
+/* Barra de Busca (Agora no Sub-header) */
+.search-container input {
+    padding: 8px 15px;
+    border: 1px solid #dcb3b0;
+    border-radius: 20px;
+    width: 250px;
+    font-size: 0.9em;
+    background-color: rgba(255,255,255,0.8);
+}
+.search-container input:focus {
+    background-color: white;
+    width: 300px;
+}
+
+/* Filtro (Switch Pequeno) */
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.filter-label {
+    color: #34495e;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* Switch Pequeno Customizado */
+.switch-small {
+    position: relative; display: inline-block; width: 34px; height: 20px;
+}
+.switch-small input { opacity: 0; width: 0; height: 0; }
+.slider-small {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc; transition: .4s; border-radius: 20px;
+}
+.slider-small:before {
+    position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px;
+    background-color: white; transition: .4s; border-radius: 50%;
+}
+input:checked + .slider-small { background-color: #34495e; }
+input:checked + .slider-small:before { transform: translateX(14px); }
+
+
+/* =========================== */
+/* AJUSTES NO CARD (ÍCONES) */
+/* =========================== */
+
+/* Botão Mais (+) */
+.more-options-icon {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 1.2em;
+    color: #bdc3c7;
+    opacity: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    z-index: 5; /* Garante que fique acima do card para clique separado */
+}
+.pokemon-item:hover .more-options-icon {
+    opacity: 1;
+}
+.more-options-icon:hover {
+    color: #3498db;
+    transform: scale(1.2);
+}
+
+/* Ícone de Shiny Capturado (Estrela) no Card */
+.shiny-indicator {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 1em;
+    display: none; /* Escondido por padrão */
+    filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.8));
+}
+.shiny-indicator.show { display: block; }
+
+/* =========================== */
+/* NOVO ESTILO DO MODAL (VARIANTE GRID) */
+/* =========================== */
+.variant-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.variant-item {
+    border: 2px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    width: 100px;
+}
+
+.variant-item:hover { border-color: #ddd; background-color: #f9f9f9; }
+.variant-item img { width: 80px; height: 80px; image-rendering: pixelated; }
+.variant-item span { display: block; font-weight: bold; color: #555; margin-top: 5px; }
+
+/* Estado Selecionado no Modal */
+.variant-item.selected {
+    border-color: #27ae60;
+    background-color: #eafaf1;
+}
+.check-indicator {
+    position: absolute; top: 5px; right: 5px;
+    background: #27ae60; color: white;
+    border-radius: 50%; width: 20px; height: 20px;
+    display: none; align-items: center; justify-content: center;
+    font-size: 0.8em;
+}
+.variant-item.selected .check-indicator { display: flex; }
+
+/* ... (MANTENHA O RESTO DO CSS DO CONTAINER E BOXES) ... */
+#pokemon-checklist { /* ... */ }
+.box-header { /* ... */ }
+.pc-box-grid { /* ... */ }
+.pokemon-item { /* ... */ }
+/* etc */

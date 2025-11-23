@@ -12,6 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // O auth (definido no HTML) vai checar o estado do login
     auth.onAuthStateChanged(user => {
         if (user) {
+        // --- CÓDIGO NOVO: ATUALIZAR O LINK DO PERFIL ---
+        const profileLink = document.getElementById('profile-link');
+        if (profileLink) {
+            // Agora o botão "Perfil" leva para a visão pública do usuário
+            profileLink.href = `profile-public.html?uid=${user.uid}`;
+        }}
+
+        if (user) {
             // --- O usuário ESTÁ logado ---
             currentUser = user;
             userId = user.uid; // ID único do usuário

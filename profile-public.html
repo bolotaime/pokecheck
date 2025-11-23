@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Treinador - Poké Check</title>
+    <link rel="stylesheet" href="style-profile-extended.css">
+    <!-- Scripts do Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    
+    <script src="firebase-init.js"></script>
+</head>
+<body>
+    <header>
+        <div style="display:flex; align-items:center;">
+            <a href="hub.html" class="back-btn">&#8592;</a>
+            <h1>Poké Check</h1>
+        </div>
+        <!-- Botão para copiar link -->
+        <button id="share-btn" style="border:none; background:transparent; color:#c0392b; cursor:pointer; font-weight:bold;">Compartilhar</button>
+    </header>
+
+    <div class="container">
+        <!-- 1. Info Principal -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                
+                <div class="profile-header">
+                    <img src="" id="pub-avatar" class="profile-avatar" alt="Avatar" style="background:#ccc;">
+                    <div class="profile-info">
+                        <h3 id="pub-name">Carregando...</h3>
+                        <span id="pub-fc-switch" class="fc-display" style="display:none;">Switch FC: --</span>
+                        <span id="pub-fc-3ds" class="fc-display" style="display:none;">3DS FC: --</span>
+                    </div>
+                </div>
+
+                <button id="edit-profile-btn" style="display:none; background-color: #f39c12; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    Editar Perfil ✏️
+                </button>
+
+            </div>
+        </div>
+
+        <!-- 2. Conquistas (Medalhas) -->
+        <div class="card">
+            <h2>Conquistas</h2>
+            <div class="medals-grid">
+                <!-- Placeholder para medalhas futuras -->
+                <div style="background:#eee; padding:10px; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center;" title="Membro Fundador">🏅</div>
+                <div style="background:#eee; padding:10px; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center;" title="Primeiro Shiny">✨</div>
+            </div>
+        </div>
+
+        <!-- 3. Checklists Iniciados -->
+        <div class="card">
+            <h2>Checklists Iniciados</h2>
+            <div id="checklists-container">
+                <p style="color:#777;">Carregando checklists...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script-profile-public.js"></script>
+</body>
+</html>
